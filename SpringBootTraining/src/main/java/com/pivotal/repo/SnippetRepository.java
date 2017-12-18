@@ -16,7 +16,7 @@ import io.pivotal.domain.Snippet;
 @Repository
 public class SnippetRepository {
 
-	private final JdbcTemplate jdbcTemplate1;
+	private final JdbcTemplate jdbcTemplate2;
 	
 	private final String SQL_INSERT = "insert into snippet(id,title,code,created,modified) values(?,?,?,?,?)";
     private final String SQL_QUERY_ALL = "select * from snippet";
@@ -34,14 +34,14 @@ public class SnippetRepository {
 
     @Autowired
     public SnippetRepository(JdbcTemplate template) {
-        this.jdbcTemplate1 = template;
+        this.jdbcTemplate2 = template;
     }
 
     public Snippet save(Snippet snippet) {
         assert snippet.getTitle() != null;
         assert snippet.getCode() != null;
 
-        this.jdbcTemplate1.update(connection -> {
+        this.jdbcTemplate2.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(SQL_INSERT);
             ps.setString(1, snippet.getId());
             ps.setString(2, snippet.getTitle());
@@ -55,11 +55,11 @@ public class SnippetRepository {
     }
 
     public List<Snippet> findAll() {
-        return this.jdbcTemplate1.query(SQL_QUERY_ALL, rowMapper);
+        return this.jdbcTemplate2.query(SQL_QUERY_ALL, rowMapper);
     }
 
     public Snippet findOne(String id) {
-        return this.jdbcTemplate1.queryForObject(SQL_QUERY_BY_ID, new Object[]{id}, rowMapper);
+        return this.jdbcTemplate2.queryForObject(SQL_QUERY_BY_ID, new Object[]{id}, rowMapper);
     }
 
 	
