@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import io.pivotal.domain.Snippet;
 
+//deepak
 @Repository
 public class SnippetRepository {
 
